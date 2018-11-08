@@ -1,0 +1,45 @@
+{
+  "author": {
+    "name": "Hasan Karahan",
+    "email": "hkarahan@dizmo.com",
+    "url": "https://github.com/hsk81"
+  },
+  "dependencies": {},
+  "description": "JSON to tree mapper",
+  "devDependencies": {
+    "@types/chai": "^4.1.7",
+    "@types/mocha": "^5.2.5",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "chai": "^4.2.0",
+    "coveralls": "^3.0.2",
+    "istanbul": "^0.4.5",
+    "mocha": "^5.2.0",
+    "nyc": "^13.1.0",
+    "tslint": "^5.11.0",
+    "typescript": "^3.1.4",
+    "yargs": "^12.0.2"
+  },
+  "files": [
+    "dist/lib"
+  ],
+  "keywords": [
+    "library",
+    "module"
+  ],
+  "license": "ISC",
+  "main": "dist/lib/index.js",
+  "name": "@dizmo/functions-json2tree",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:dizmo/functions-json2tree.git"
+  },
+  "scripts": {
+    "build": "node ./cli/run-build.js",
+    "cover": "node ./cli/run-test.js --cover",
+    "lint": "node ./cli/run-lint.js",
+    "test": "node ./cli/run-test.js"
+  },
+  "types": "dist/lib/index.d.ts",
+  "version": "1.0.0"
+}
