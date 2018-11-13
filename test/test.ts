@@ -1,6 +1,3 @@
-/* tslint:disable:max-classes-per-file */
-/* tslint:disable:no-shadowed-variable */
-
 import { expect } from "chai";
 import { array2tree } from "../lib";
 import { object2tree } from "../lib";

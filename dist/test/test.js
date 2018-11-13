@@ -1,6 +1,4 @@
 "use strict";
-/* tslint:disable:max-classes-per-file */
-/* tslint:disable:no-shadowed-variable */
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var chai_1 = require("chai");
