@@ -51,8 +51,9 @@ export const array2tree = function at2(
                 )) {
                     return false;
                 }
+            } else {
+                continue;
             }
-            return false;
         }
         return true;
     }

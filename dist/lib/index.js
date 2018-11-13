@@ -52,8 +52,9 @@ exports.array2tree = function at2(path, array, apply) {
                 if (false === at2("" + (path || "") + separator + name, tree, apply, separator = separator)) {
                     return false;
                 }
+            } else {
+                continue;
             }
-            return false;
         }
         return true;
     }

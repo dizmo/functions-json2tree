@@ -24,54 +24,62 @@ describe("object2tree", function () {
 });
 describe("array2tree", function () {
     it("should map array to 'a' node of tree", function () {
-        lib_1.array2tree("a", ["α"], function (key, value) {
+        var mapped = lib_1.array2tree("a", ["α"], function (key, value) {
             mock_1.TreeMock.apply(key, value);
         });
+        chai_1.expect(mapped).to.eq(true);
     });
     it("should map array to 'b' node of tree", function () {
-        lib_1.array2tree("b", ["β", ["i", [0]], ["j", [1]], ["k", [2]]], function (key, value) {
+        var mapped = lib_1.array2tree("b", ["β", ["i", [0]], ["j", [1]], ["k", [2]]], function (key, value) {
             mock_1.TreeMock.apply(key, value);
         });
+        chai_1.expect(mapped).to.eq(true);
     });
     it("should map array to 'c' node of tree", function () {
-        lib_1.array2tree("c", ["γ", ["x", ["ξ", ["y", ["υ", ["z", ["ζ"]]]]]]], function (key, value) {
+        var mapped = lib_1.array2tree("c", ["γ", ["x", ["ξ", ["y", ["υ", ["z", ["ζ"]]]]]]], function (key, value) {
             mock_1.TreeMock.apply(key, value);
         });
+        chai_1.expect(mapped).to.eq(true);
     });
     it("should map array to root node of tree", function () {
-        lib_1.array2tree(null, [undefined, ["a", ["α"]], ["b", ["β", ["i", [0]], ["j", [1]], ["k", [2]]]], ["c", ["γ", ["x", ["ξ", ["y", ["υ", ["z", ["ζ"]]]]]]]]], function (key, value) {
+        var mapped = lib_1.array2tree(null, [undefined, ["a", ["α"]], ["b", ["β", ["i", [0]], ["j", [1]], ["k", [2]]]], ["c", ["γ", ["x", ["ξ", ["y", ["υ", ["z", ["ζ"]]]]]]]]], function (key, value) {
             mock_1.TreeMock.apply(key, value);
         });
+        chai_1.expect(mapped).to.eq(true);
     });
 });
 describe("object2tree", function () {
     it("should map string to 'a' node of tree", function () {
-        lib_2.object2tree("a", "α", function (key, value) {
+        var mapped = lib_2.object2tree("a", "α", function (key, value) {
             mock_1.TreeMock.apply(key, value);
         });
+        chai_1.expect(mapped).to.eq(true);
     });
     it("should map object to 'b' node of tree", function () {
-        lib_2.object2tree("b", {
+        var mapped = lib_2.object2tree("b", {
             _: "β", i: 0, j: 1, k: 2
         }, function (key, value) {
             mock_1.TreeMock.apply(key, value);
         });
+        chai_1.expect(mapped).to.eq(true);
     });
     it("should map object to 'c' node of tree", function () {
-        lib_2.object2tree("c", {
+        var mapped = lib_2.object2tree("c", {
             _: "γ", x: { _: "ξ", y: { _: "υ", z: "ζ" } }
         }, function (key, value) {
             mock_1.TreeMock.apply(key, value);
         });
+        chai_1.expect(mapped).to.eq(true);
     });
     it("should map object to root node of tree", function () {
-        lib_2.object2tree(null, {
+        var mapped = lib_2.object2tree(null, {
             a: "α",
             b: { _: "β", i: 0, j: 1, k: 2 },
             c: { _: "γ", x: { _: "ξ", y: { _: "υ", z: "ζ" } } }
         }, function (key, value) {
             mock_1.TreeMock.apply(key, value);
         });
+        chai_1.expect(mapped).to.eq(true);
     });
 });
 //# sourceMappingURL=test.js.map
