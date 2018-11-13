@@ -3,7 +3,15 @@
 [![Coverage Status](https://coveralls.io/repos/github/dizmo/functions-json2tree/badge.svg?branch=master)](https://coveralls.io/github/dizmo/functions-json2tree?branch=master)
 
 # @dizmo/functions-json2tree
- Maps recursively a JSON-like object via a `mapper` function, until the object is completely mapped, or the `mapper` returns `false`.
+Provides two functions `array2tree` and `object2tree`, where:
+
+* `array2tree`: maps an array via an `apply` function, until the array is completely mapped, or `apply` returns `false`.
+
+The array is a recursive description of a tree, where the *value* of a given node is at index `0` of the array followed *optionally* by other arrays, each containing the *name* followed by a *sub-tree* for any given sub-nodes. Each sub-tree is again yet another array according to the same recursive description.
+
+* `object2tree`: maps a JSON-like object via an `apply` function, until the object is completely mapped or `apply` returns `false`.
+
+The object conforms to the same rules like any regular JSON or JavaScript object, with the addition that the values of nodes can be directly represented using an underscore `_` for the key value.
 
 ## Usage
 ### Install
@@ -16,14 +24,35 @@ let lib = require('@dizmo/functions-json2tree');
 ```
 ### Examples
 ```typescript
-import { json2tree } from '@dizmo/functions-json2tree';
+import { array2tree } from '@dizmo/functions-json2tree';
+import { object2tree } from '@dizmo/functions-json2tree';
 ```
 ```typescript
 declare const db: {
-    set: (key: string, value: any) => any;
+    set: (key: string | null, value: any) => any;
 };
-json2tree(
-    "root", {a:1, b:{y:true}, c:{z:"z"}}, db.set);
+```
+```typescript
+array2tree("path/to/a-node", [
+    "α"
+], db.set);
+array2tree("path/to/b-node", [
+    "β", ["i", [0]], ["j", [1]], ["k", [2]]
+], db.set);
+array2tree("path/to/c-node", [
+    "γ", ["x", ["ξ", ["y", ["υ", ["z", ["ζ"]]]]]]
+], db.set);
+```
+```typescript
+object2tree("path/to/a-node", {
+    _: "α"
+}, db.set);
+object2tree("path/to/b-node", {
+    _: "β", i: 0, j: 1, k: 2
+}, db.set);
+object2tree("path/to/c-node", {
+    _: "γ", x: {_: "ξ", y: {_: "υ", z: "ζ"}}
+}, db.set);
 ```
 ## Development
 ### Build

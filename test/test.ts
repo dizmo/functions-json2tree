@@ -2,60 +2,91 @@
 /* tslint:disable:no-shadowed-variable */
 
 import { expect } from "chai";
-import { json2tree } from "../lib";
+import { array2tree } from "../lib";
+import { object2tree } from "../lib";
+import { TreeMock } from "./mock";
 
 import "mocha";
 
-describe("json2tree", () => {
+describe("array2tree", () => {
     it("should exist", () => {
-        expect(json2tree).to.not.be.an("undefined");
+        expect(array2tree).to.not.be.an("undefined");
     });
     it("should be a function", () => {
-        expect(json2tree).to.be.a("function");
+        expect(array2tree).to.be.a("function");
     });
 });
 
-describe("json2tree", () => {
-    it("should map a string", () => {
-        class Mock {
-            public static set(path: string, value: any) {
-                expect(path).to.eq("root");
-                expect(value).to.eq("string");
-            }
-        }
-        json2tree("root", "string", Mock.set);
+describe("object2tree", () => {
+    it("should exist", () => {
+        expect(object2tree).to.not.be.an("undefined");
     });
-    it("should map an object", () => {
-        class Mock {
-            public static set(path: string, value: any) {
-                expect(path.startsWith("root")).to.eq(true);
-                expect(path.endsWith("/")).to.eq(false);
-                switch (path) {
-                    case "root/a":
-                        throw new Error("root/a");
-                    case "root/a/x":
-                        expect(value).to.eq(1);
-                        break;
-                    case "root/b":
-                        throw new Error("root/b");
-                    case "root/b/y":
-                        expect(value).to.eq(true);
-                        break;
-                    case "root/c":
-                        throw new Error("root/c");
-                    case "root/c/z":
-                        throw new Error("root/c/z");
-                }
-            }
-        }
-        json2tree("root", {
-            a: {x: 1}, b: {y: true}, c: {z: "z"},
-        }, (key: string, value: any) => {
-            if (key !== "root/c/z" && value !== "z") {
-                Mock.set(key, value);
-            } else {
-                return false;
-            }
+    it("should be a function", () => {
+        expect(object2tree).to.be.a("function");
+    });
+});
+
+describe("array2tree", () => {
+    it("should map array to 'a' node of tree", () => {
+        array2tree("a", [
+            "α",
+        ], (key: string | null, value: any) => {
+            TreeMock.apply(key, value);
+        });
+    });
+    it("should map array to 'b' node of tree", () => {
+        array2tree("b", [
+            "β", ["i", [0]], ["j", [1]], ["k", [2]],
+        ], (key: string | null, value: any) => {
+            TreeMock.apply(key, value);
+        });
+    });
+    it("should map array to 'c' node of tree", () => {
+        array2tree("c", [
+            "γ", ["x", ["ξ", ["y", ["υ", ["z", ["ζ"]]]]]],
+        ], (key: string | null, value: any) => {
+            TreeMock.apply(key, value);
+        });
+    });
+    it("should map array to root node of tree", () => {
+        array2tree(null, [
+            undefined,
+            ["a", ["α"]],
+            ["b", ["β", ["i", [0]], ["j", [1]], ["k", [2]]]],
+            ["c", ["γ", ["x", ["ξ", ["y", ["υ", ["z", ["ζ"]]]]]]]],
+        ], (key: string | null, value: any) => {
+            TreeMock.apply(key, value);
+        });
+    });
+});
+
+describe("object2tree", () => {
+    it("should map string to 'a' node of tree", () => {
+        object2tree("a", "α", (key: string | null, value: any) => {
+            TreeMock.apply(key, value);
+        });
+    });
+    it("should map object to 'b' node of tree", () => {
+        object2tree("b", {
+            _: "β", i: 0, j: 1, k: 2,
+        }, (key: string | null, value: any) => {
+            TreeMock.apply(key, value);
+        });
+    });
+    it("should map object to 'c' node of tree", () => {
+        object2tree("c", {
+            _: "γ", x: {_: "ξ", y: {_: "υ", z: "ζ"}},
+        }, (key: string | null, value: any) => {
+            TreeMock.apply(key, value);
+        });
+    });
+    it("should map object to root node of tree", () => {
+        object2tree(null, {
+            a: "α",
+            b: {_: "β", i: 0, j: 1, k: 2},
+            c: {_: "γ", x: {_: "ξ", y: {_: "υ", z: "ζ"}}},
+        }, (key: string | null, value: any) => {
+            TreeMock.apply(key, value);
         });
     });
 });
