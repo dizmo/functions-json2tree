@@ -29,6 +29,7 @@ import { object2tree } from '@dizmo/functions-json2tree';
 ```
 ```typescript
 declare const db: {
+    // db should set value for given path (or root)
     set: (key: string | null, value: any) => any;
 };
 ```
