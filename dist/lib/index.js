@@ -1,8 +1,10 @@
 "use strict";
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-Object.defineProperty(exports, "__esModule", { value: true });
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 /**
  * Maps recursively an array via an `apply` function, until the array
  * is completely mapped, or `apply` returns `false`. The structure of
@@ -30,35 +32,44 @@ Object.defineProperty(exports, "__esModule", { value: true });
  *
  * @returns true upon a complete mapping, otherwise false
  */
-exports.array2tree = function at2(path, array, apply) {
-    var separator = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "/";
 
-    if (path !== null && path.startsWith(separator)) {
-        path = path.slice(1);
+exports.array2tree = function at2(path, array, apply) {
+  var separator = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "/";
+
+  if (path !== null && path.startsWith(separator)) {
+    path = path.slice(1);
+  }
+
+  if (path !== null && path.endsWith(separator)) {
+    path = path.slice(0, -1);
+  }
+
+  if (array.length > 0) {
+    var value = array[0];
+
+    if (false === apply(path, value)) {
+      return false;
     }
-    if (path !== null && path.endsWith(separator)) {
-        path = path.slice(0, -1);
-    }
-    if (array.length > 0) {
-        var value = array[0];
-        if (false === apply(path, value)) {
-            return false;
+
+    for (var i = 1; i < array.length; i++) {
+      var node = array[i];
+
+      if (node.length > 1) {
+        var name = node[0];
+        var tree = node[1];
+
+        if (false === at2("".concat(path || "").concat(separator).concat(name), tree, apply, separator = separator)) {
+          return false;
         }
-        for (var i = 1; i < array.length; i++) {
-            var node = array[i];
-            if (node.length > 1) {
-                var name = node[0];
-                var tree = node[1];
-                if (false === at2("" + (path || "") + separator + name, tree, apply, separator = separator)) {
-                    return false;
-                }
-            } else {
-                continue;
-            }
-        }
-        return true;
+      } else {
+        continue;
+      }
     }
-    return false;
+
+    return true;
+  }
+
+  return false;
 };
 /**
  * Maps recursively a JSON-like object via an `apply` function, until the
@@ -73,38 +84,44 @@ exports.array2tree = function at2(path, array, apply) {
  *
  * @returns true upon a complete mapping, otherwise false
  */
-exports.object2tree = function o2t(path, object, apply) {
-    var separator = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "/";
-    var value_key = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : "_";
 
-    if (path !== null && path.startsWith(separator)) {
-        path = path.slice(1);
-    }
-    if (path !== null && path.endsWith(separator)) {
-        path = path.slice(0, -1);
-    }
-    if (object !== null) {
-        if ((typeof object === "undefined" ? "undefined" : _typeof(object)) === "object") {
-            for (var key in object) {
-                if (object.hasOwnProperty(key)) {
-                    if (key === value_key) {
-                        if (false === apply(path, object[value_key])) {
-                            return false;
-                        }
-                    } else {
-                        if (false === o2t((path || "") + "/" + key, object[key], apply, separator = separator, value_key = value_key)) {
-                            return false;
-                        }
-                    }
-                }
+
+exports.object2tree = function o2t(path, object, apply) {
+  var separator = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "/";
+  var value_key = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : "_";
+
+  if (path !== null && path.startsWith(separator)) {
+    path = path.slice(1);
+  }
+
+  if (path !== null && path.endsWith(separator)) {
+    path = path.slice(0, -1);
+  }
+
+  if (object !== null) {
+    if (_typeof(object) === "object") {
+      for (var key in object) {
+        if (object.hasOwnProperty(key)) {
+          if (key === value_key) {
+            if (false === apply(path, object[value_key])) {
+              return false;
             }
-            return true;
-        } else {
-            return apply(path, object) !== false;
+          } else {
+            if (false === o2t("".concat(path || "", "/").concat(key), object[key], apply, separator = separator, value_key = value_key)) {
+              return false;
+            }
+          }
         }
+      }
+
+      return true;
     } else {
-        return apply(path, object) !== false;
+      return apply(path, object) !== false;
     }
+  } else {
+    return apply(path, object) !== false;
+  }
 };
-exports.default = exports.object2tree;
+
+exports["default"] = exports.object2tree;
 //# sourceMappingURL=index.js.map
