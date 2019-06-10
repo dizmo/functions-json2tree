@@ -2,7 +2,8 @@ import { expect } from "chai";
 
 export class TreeMock {
     public static apply(
-        path: string | null, value: any): void | boolean {
+        path: string | null, value: string
+    ): void | boolean {
         switch (path) {
             case null:
                 return undefined;

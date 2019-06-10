@@ -1,3 +1,4 @@
+/* eslint no-prototype-builtins: [off] */
 /**
  * Maps recursively an array via an `apply` function, until the array
  * is completely mapped, or `apply` returns `false`. The structure of
@@ -46,8 +47,8 @@ export const array2tree = function at2(
             if (node.length > 1) {
                 const name = node[0] as string;
                 const tree = node[1] as any[];
-                if (false === at2(`${path || ""}${separator}${name}`,
-                    tree, apply, separator = separator,
+                if (false === at2(
+                    `${path || ""}${separator}${name}`, tree, apply, separator
                 )) {
                     return false;
                 }
@@ -97,7 +98,7 @@ export const object2tree = function o2t(
                     } else {
                         if (false === o2t(
                             `${path || ""}/${key}`, object[key], apply,
-                            separator = separator, value_key = value_key,
+                            separator, value_key
                         )) {
                             return false;
                         }
@@ -112,5 +113,4 @@ export const object2tree = function o2t(
         return apply(path, object) !== false;
     }
 };
-
 export default object2tree;
