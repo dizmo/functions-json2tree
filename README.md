@@ -1,5 +1,5 @@
 [![NPM version](https://badge.fury.io/js/%40dizmo%2Ffunctions-json2tree.svg)](https://npmjs.org/package/@dizmo/functions-json2tree)
-[![Build Status](https://travis-ci.org/dizmo/functions-json2tree.svg?branch=master)](https://travis-ci.org/dizmo/functions-json2tree)
+[![Build Status](https://travis-ci.com/dizmo/functions-json2tree.svg?branch=master)](https://travis-ci.com/dizmo/functions-json2tree)
 [![Coverage Status](https://coveralls.io/repos/github/dizmo/functions-json2tree/badge.svg?branch=master)](https://coveralls.io/github/dizmo/functions-json2tree?branch=master)
 
 # @dizmo/functions-json2tree
